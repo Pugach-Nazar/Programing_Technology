@@ -27,7 +27,7 @@ pipeline {
                 sh 'pip install xmlrunner'
 
                 // Запускаємо тести та зберігаємо звіт у форматі XML
-                sh 'python3 test_pawnhsop.py'
+                sh 'python3 lab4/test_pawnhsop.py'
             }
             post {
                 always {
