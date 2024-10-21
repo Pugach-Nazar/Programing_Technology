@@ -16,21 +16,30 @@ pipeline {
             }
         } 
         stage('Build') {
+            agent{
+                docker{
+                    image 'python:3.12-alpine' 
+                    args '-u root'
+                }
+            }
             steps {
+                sh 'apk add --no-cache py3-pip'
+                sh 'pip install unittest-xml-reporting'
+
                 echo "Building ...${BUILD_NUMBER}"
                 echo "Build completed"
             }
         } 
         stage('Test') {
-            agent { 
-                docker { 
-                    image 'python:3.12-alpine' 
-                    args '-u root'
-                } 
-            }
+            // agent { 
+            //     docker { 
+            //         image 'python:3.12-alpine' 
+            //         args '-u root'
+            //     } 
+            // }
             steps {
-                sh 'apk add --no-cache py3-pip'
-                sh 'pip install unittest-xml-reporting'
+                // sh 'apk add --no-cache py3-pip'
+                // sh 'pip install unittest-xml-reporting'
                 sh 'python lab4/test_pawnshop.py'
             }
             post {
