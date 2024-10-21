@@ -1,6 +1,13 @@
 pipeline {
     options { timestamps() }
     agent none
+
+    triggers {
+        pollSCM('H/5 * * * *')
+
+        cron('H/15 * * * *')
+    }
+
     stages {
         stage('Check scm') {
             agent any
@@ -18,18 +25,16 @@ pipeline {
             agent { 
                 docker { 
                     image 'python:3.12-alpine' 
-                    args '-u="root"'
+                    args '-u root'
                 } 
             }
             steps {
                 sh 'apk add --no-cache py3-pip'
                 sh 'pip install unittest-xml-reporting'
-
-                sh 'python lab4/test_pawnshop.py' 
+                sh 'python lab4/test_pawnshop.py'
             }
             post {
                 always {
-                    // Архівуємо звіти про тести
                     junit 'lab4/results.xml'
                 }
                 success {
