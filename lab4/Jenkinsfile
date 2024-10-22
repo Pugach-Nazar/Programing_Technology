@@ -51,12 +51,14 @@ pipeline {
             agent any
             steps {
                 script {
+                    // Зберігаємо токен у змінній середовища
                     def dockerToken = credentials('docker_token')
 
+                    // Використання командного рядка для аутентифікації та публікації
                     sh """
-                    echo \$dockerToken | docker login --username qwertyasd0933 --password-stdin
-                    docker push yourusername/pawnshopapp:${BUILD_NUMBER}
-                    docker push yourusername/pawnshopapp:latest
+                    echo ${dockerToken} | docker login --username qwertyasd0933 --password-stdin
+                    docker push qwertyasd0933/pawnshopapp:${BUILD_NUMBER}
+                    docker push qwertyasd0933/pawnshopapp:latest
                     """
                 }
             }
