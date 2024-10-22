@@ -49,7 +49,7 @@ pipeline {
             steps {
                 script {
                     // Створюємо Docker image з Dockerfile
-                    dockerImage = docker.build("pawnsopApp:${BUILD_NUMBER}", "-f lab4/Dockerfile .")
+                    dockerImage = docker.build("pawnsopapp:${BUILD_NUMBER}", "-f lab4/Dockerfile .")
                 }
             }
         }
