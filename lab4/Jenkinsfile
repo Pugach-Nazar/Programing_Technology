@@ -56,7 +56,7 @@ pipeline {
 
                     // Використання командного рядка для аутентифікації та публікації
                     sh """
-                    echo ${dockerToken} | docker login --username qwertyasd0933 --password-stdin
+                    echo "${dockerToken}" | docker login --username qwertyasd0933 --password-stdin
                     docker push qwertyasd0933/pawnshopapp:${BUILD_NUMBER}
                     docker push qwertyasd0933/pawnshopapp:latest
                     """
