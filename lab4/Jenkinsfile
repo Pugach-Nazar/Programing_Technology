@@ -56,9 +56,9 @@ pipeline {
             agent any
             steps {
                 script {
-                    docker.withRegistry("", 'docker_token') {
-                        dockerImage.push("${BUILD_NUMBER}")
-                        dockerImage.push("latest")
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker_token') {
+                        dockerImage.push("qwertyasd0933/pawnshopapp:${BUILD_NUMBER}")
+                        dockerImage.push("qwertyasd0933/pawnshopapp:latest")
                     }
                 }
             }
