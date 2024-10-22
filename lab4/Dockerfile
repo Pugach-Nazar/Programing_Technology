@@ -4,6 +4,6 @@ RUN apk add --update python3 py-pip
 
  WORKDIR /app
 
- COPY pawnshop.py /app
+ COPY . /app
 
  CMD [ "python", "pawnshop.py"]
