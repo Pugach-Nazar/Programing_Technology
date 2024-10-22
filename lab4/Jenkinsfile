@@ -44,22 +44,19 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image') {
+        stage('Build Image') {
             agent any
             steps {
                 script {
-                    // Створюємо Docker image з Dockerfile
                     dockerImage = docker.build("pawnsopapp:${BUILD_NUMBER}", "-f lab4/Dockerfile .")
                 }
             }
         }
-        stage('Push Docker Image to Docker Hub') {
+        stage('Push Image to Docker Hub') {
             agent any
             steps {
                 script {
-                    // Використання Jenkins credentials для автентифікації в Docker Hub
-                    docker.withRegistry('https://index.docker.io/v1/', 'docker_token') {
-                        // Завантаження образу на Docker Hub
+                    docker.withRegistry("", 'docker_token') {
                         dockerImage.push("${BUILD_NUMBER}")
                         dockerImage.push("latest")
                     }
