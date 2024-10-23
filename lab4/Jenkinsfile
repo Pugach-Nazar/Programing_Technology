@@ -1,21 +1,20 @@
 pipeline {
     options { timestamps() }
 
-    environment {
-        DOCKER_CRED = credentials('docker_cred')
+    environment{
+        DOCKER_CREDS = credentials('docker_cred')
     }
 
-    agent none  // Вказуємо, що агент за замовчуванням не використовується
 
     stages {
         stage('Check scm') {
-            agent any  // Вказуємо, що для цього етапу використовуємо будь-який доступний агент
+            agent any
             steps {
                 checkout scm
             }
         } 
         stage('Build') {
-            agent any  // Будь-який агент для цього етапу
+            agent any
             steps {
                 echo "Building ...${BUILD_NUMBER}"
                 echo "Build completed"
@@ -45,25 +44,16 @@ pipeline {
                 }
             }
         }
-        stage("Docker build") {
+        stage("Publish") {
             agent any
             steps {
-                sh 'docker build --progress=plain --no-cache -t qwertyasd0933/pawnshop_app:latest lab4/'
-            }
+                sh 'echo $DOCKER_CREDS_PSW | docker login --username $DOCKER_CREDS_USR --password-stdin'
+                sh 'docker build -t qwertyasd0933/pawnshop:latest --push'
         }
-        stage("Docker login & push") {
-            agent any 
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'docker_cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                        sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                    }
-
-                    sh 'docker tag qwertyasd0933/pawnshop_app:latest qwertyasd0933/pawnshop_app:${BUILD_NUMBER}'
-                    sh 'docker push qwertyasd0933/pawnshop_app:latest'
-                    sh "docker push qwertyasd0933/pawnshop_app:${BUILD_NUMBER}"
-                }
-            }   
+        post{
+            always{
+                sh 'docker logout'
+            }
         }
     }
 }
