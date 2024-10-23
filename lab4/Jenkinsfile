@@ -2,7 +2,7 @@ pipeline {
     options { timestamps() }
 
     environment {
-        DOCKER_CRED = credentials('docker_cred')  // Використання Jenkins credentials
+        DOCKER_CRED = credentials('docker_cred')
     }
 
     agent none
@@ -53,9 +53,8 @@ pipeline {
         stage("Docker login & push") {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'docker_cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                        sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                    }
+                    sh 'echo $DOCKER_CRED_PSW | docker login -u $DOCKER_CRED_USR --password-stdin'
+
 
                     sh 'docker tag qwertyasd0933/pawnshop_app:latest qwertyasd0933/pawnshop_app:${BUILD_NUMBER}'
                     sh 'docker push qwertyasd0933/pawnshop_app:latest'
