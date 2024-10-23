@@ -39,9 +39,10 @@ pipeline {
                 }
             }
         }
-        stage("Docker build"){
-            steps{
-                sh 'docker build -t qwertyasd0933/pawnshop_app:latest lab4/'
+        stage("Docker build") {
+            agent any
+            steps {
+                sh 'docker build --progress=plain --no-cache -t qwertyasd0933/pawnshop_app:latest lab4/'
             }
         }
     }
