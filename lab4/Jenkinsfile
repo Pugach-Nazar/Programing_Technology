@@ -1,9 +1,10 @@
 pipeline {
     options { timestamps() }
 
-    environment{
-        DOCKER_CRED=credantial('docker_cred')
+    environment {
+        DOCKER_CRED = credentials('docker_cred')
     }
+
     agent none
 
     stages {
@@ -53,6 +54,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', DOCKER_CRED) {
+                        sh 'docker tag qwertyasd0933/pawnshop_app:latest qwertyasd0933/pawnshop_app:${BUILD_NUMBER}'
                         sh 'docker push qwertyasd0933/pawnshop_app:latest'
                         sh "docker push qwertyasd0933/pawnshop_app:${BUILD_NUMBER}"
                     }
