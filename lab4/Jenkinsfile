@@ -5,16 +5,17 @@ pipeline {
         DOCKER_CRED = credentials('docker_cred')
     }
 
-    agent none
+    agent none  // Вказуємо, що агент за замовчуванням не використовується
 
     stages {
         stage('Check scm') {
-            agent any
+            agent any  // Вказуємо, що для цього етапу використовуємо будь-який доступний агент
             steps {
                 checkout scm
             }
         } 
         stage('Build') {
+            agent any  // Будь-який агент для цього етапу
             steps {
                 echo "Building ...${BUILD_NUMBER}"
                 echo "Build completed"
@@ -51,10 +52,12 @@ pipeline {
             }
         }
         stage("Docker login & push") {
+            agent any 
             steps {
                 script {
-                    sh 'echo $DOCKER_CRED_PSW | docker login -u $DOCKER_CRED_USR --password-stdin'
-
+                    withCredentials([usernamePassword(credentialsId: 'docker_cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    }
 
                     sh 'docker tag qwertyasd0933/pawnshop_app:latest qwertyasd0933/pawnshop_app:${BUILD_NUMBER}'
                     sh 'docker push qwertyasd0933/pawnshop_app:latest'
