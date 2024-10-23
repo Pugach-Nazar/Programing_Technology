@@ -53,11 +53,12 @@ pipeline {
         stage("Docker login & push") {
             steps {
                 script {
-                    docker.withRegistry('', DOCKER_CRED) {
-                        sh 'docker tag qwertyasd0933/pawnshop_app:latest qwertyasd0933/pawnshop_app:${BUILD_NUMBER}'
-                        sh 'docker push qwertyasd0933/pawnshop_app:latest'
-                        sh "docker push qwertyasd0933/pawnshop_app:${BUILD_NUMBER}"
-                    }
+                    sh 'echo $DOCKER_CRED | docker login -u $DOCKER_CRED --password-stdin'
+
+
+                    sh 'docker tag qwertyasd0933/pawnshop_app:latest qwertyasd0933/pawnshop_app:${BUILD_NUMBER}'
+                    sh 'docker push qwertyasd0933/pawnshop_app:latest'
+                    sh "docker push qwertyasd0933/pawnshop_app:${BUILD_NUMBER}"
                 }
             }   
         }
