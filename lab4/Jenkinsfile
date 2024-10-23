@@ -39,28 +39,9 @@ pipeline {
                 }
             }
         }
-        stage('Build Image') {
-            agent any
-            steps {
-                script {
-                    dockerImage = docker.build("pawnshopapp:${BUILD_NUMBER}", "-f lab4/Dockerfile .")
-                }
-            }
-        }
-        stage('Push Image to Docker Hub') {
-            agent any
-            steps {
-                script {
-                    // Зберігаємо токен у змінній середовища
-                    def dockerToken = credentials('docker_token')
-
-                    // Використання командного рядка для аутентифікації та публікації
-                    sh """
-                    echo "${dockerToken}" | docker login --username qwertyasd0933 --password-stdin
-                    docker push qwertyasd0933/pawnshopapp:${BUILD_NUMBER}
-                    docker push qwertyasd0933/pawnshopapp:latest
-                    """
-                }
+        stage("Docker build"){
+            steps{
+                sh "docker build -t qwertyasd0933/pawnshop_app:latest lab4/Dockerfile"
             }
         }
     }
