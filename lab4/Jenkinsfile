@@ -1,10 +1,9 @@
 pipeline {
     options { timestamps() }
 
-    environment{
+    environment {
         DOCKER_CREDS = credentials('docker_cred')
     }
-
 
     stages {
         stage('Check scm') {
@@ -48,11 +47,13 @@ pipeline {
             agent any
             steps {
                 sh 'echo $DOCKER_CREDS_PSW | docker login --username $DOCKER_CREDS_USR --password-stdin'
-                sh 'docker build -t qwertyasd0933/pawnshop:latest --push'
-        }
-        post{
-            always{
-                sh 'docker logout'
+                sh 'docker build -t qwertyasd0933/pawnshop:latest .'
+                sh 'docker push qwertyasd0933/pawnshop:latest'
+            }
+            post {
+                always {
+                    sh 'docker logout'
+                }
             }
         }
     }
