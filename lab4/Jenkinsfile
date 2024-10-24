@@ -1,5 +1,11 @@
 pipeline {
+
+    triggers {
+        cron('H/15 * * * *')
+    }
+    
     options { timestamps() }
+
     agent none
     environment {
         DOCKER_CREDS = credentials('docker_cred')
