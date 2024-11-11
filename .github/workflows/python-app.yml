@@ -8,6 +8,7 @@ on:
     branches: [ "lab6" ]
   pull_request:
     branches: [ "lab6" ]
+  workflow_dispatch: 
 
 permissions:
   contents: read
