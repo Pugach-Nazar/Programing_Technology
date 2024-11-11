@@ -5,9 +5,9 @@ name: Python app deploy on aws by gitAction v1
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "lab6" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "lab6" ]
 
 permissions:
   contents: read
