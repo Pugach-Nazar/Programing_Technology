@@ -41,12 +41,12 @@ resource "aws_security_group" "web_app" {
   }
 }
 
-resource "aws_instance" "lab6_instance" {
+resource "aws_instance" "webapp_instance" {
   ami           = "ami-0866a3c8686eaeeba"
   instance_type = "t2.micro"
   security_groups= ["web_app"]
   tags = {
-    Name = "lab6_instance"
+    Name = "webapp_instance"
   }
 }
 
