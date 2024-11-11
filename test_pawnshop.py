@@ -1,11 +1,11 @@
 import pawnshop as pw
 import unittest
-import xmlrunner
 
 class TestPawnshopApp(unittest.TestCase):
     def setUp(self) -> None:
         self.data_list = {
             1:{
+
                 'ціна':500,
                 'назва' : 'годинник'
             },
@@ -73,5 +73,4 @@ class TestPawnshopApp(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    with open('lab4/results.xml', 'wb') as output:
-        unittest.main(testRunner=xmlrunner.XMLTestRunner(output=output))
+    unittest.main()
