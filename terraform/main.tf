@@ -45,6 +45,15 @@ resource "aws_instance" "webapp_instance" {
   ami           = "ami-0866a3c8686eaeeba"
   instance_type = "t2.micro"
   security_groups= ["web_app"]
+  user_data = <<-EOF
+  #!/bin/bash
+  curl -fsSL https://get.docker.com -o get-docker.sh
+  sudo sh get-docker.sh
+  sudo groupadd docker
+  sudo usermod -aG docker ubuntu
+  newgrp docker
+  docker run -id qwertyasd0933/pawnshop
+  EOF
   tags = {
     Name = "webapp_instance"
   }
