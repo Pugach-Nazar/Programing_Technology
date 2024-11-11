@@ -6,6 +6,12 @@ terraform {
       version = "~> 5.0"
     }
   }
+  backend "s3" {
+    bucket = "lab6-bucket-terraform"
+    key = "terraform.tfstate"
+    region = "us-east-1"
+    dynamodb_table = "lab6-lock-id-table"
+  }
 }
 
 # Configure the AWS provider
