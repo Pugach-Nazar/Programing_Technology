@@ -53,7 +53,8 @@ resource "aws_instance" "webapp_instance" {
   security_groups= ["web_app"]
   user_data = <<-EOF
   #!/bin/bash
-  sudo apt  install docker.io
+  sudo apt update
+  sudo apt install docker.io
   docker run -id qwertyasd0933/pawnshop
   EOF
   tags = {
