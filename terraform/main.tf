@@ -55,6 +55,9 @@ resource "aws_instance" "webapp_instance" {
   #!/bin/bash
   sudo apt update
   sudo apt install -y docker.io
+  sudo systemctl start docker
+  sudo systemctl enable docker
+  docker --version
   docker run -id qwertyasd0933/pawnshop
   EOF
   tags = {
