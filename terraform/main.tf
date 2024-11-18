@@ -51,15 +51,6 @@ resource "aws_instance" "webapp_instance" {
   ami           = "ami-0866a3c8686eaeeba"
   instance_type = "t2.micro"
   security_groups= ["web_app"]
-  user_data = <<-EOF
-  #!/bin/bash
-  sudo apt update
-  sudo apt install -y docker.io
-  sudo systemctl start docker
-  sudo systemctl enable docker
-  sudo usermod -aG docker ubuntu
-  docker run -d qwertyasd0933/pawnshop
-  EOF
   tags = {
     Name = "webapp_instance"
   }
