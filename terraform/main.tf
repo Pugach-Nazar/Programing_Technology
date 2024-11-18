@@ -58,7 +58,7 @@ resource "aws_instance" "webapp_instance" {
   sudo systemctl start docker
   sudo systemctl enable docker
   ssudo usermod -aG docker ubuntu
-  docker run -id qwertyasd0933/pawnshop
+  docker run -d qwertyasd0933/pawnshop
   EOF
   tags = {
     Name = "webapp_instance"
